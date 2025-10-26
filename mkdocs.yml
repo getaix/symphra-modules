@@ -1,0 +1,108 @@
+site_name: Symphra Modules
+site_description: 高性能、高质量的 Python 模块管理库
+site_author: mpf
+site_url: https://getaix.github.io/symphra-modules
+repo_url: https://github.com/getaix/symphra-modules.git
+repo_name: getaix/symphra-modules
+
+docs_dir: docs/zh
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到暗色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到亮色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_object_full_path: false
+            show_category_heading: true
+            show_if_no_docstring: false
+            heading_level: 2
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - 首页: index.md
+  - 快速开始: quickstart.md
+  - 用户指南:
+      - 基本概念: guide/concepts.md
+      - 模块定义: guide/module-definition.md
+      - 加载模块: guide/loading.md
+      - 生命周期: guide/lifecycle.md
+      - 依赖管理: guide/dependencies.md
+      - 事件系统: guide/events.md
+      - 异步支持: guide/async.md
+  - API 参考:
+      - 核心抽象: api/abc.md
+      - 配置: api/config.md
+      - 异常: api/exceptions.md
+      - 加载器: api/loader.md
+      - 注册表: api/registry.md
+      - 管理器: api/manager.md
+      - 依赖解析: api/resolver.md
+      - 事件系统: api/events.md
+      - 工具: api/utils.md
+  - 示例: examples.md
+  - 开发指南: development.md
+  - 变更日志: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/getaix/symphra-modules.git
+  version:
+    provider: mike
+
+watch:
+  - src/symphra_modules

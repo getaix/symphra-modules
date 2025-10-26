@@ -1,0 +1,108 @@
+site_name: Symphra Modules
+site_description: High-performance, high-quality Python module management library
+site_author: mpf
+site_url: https://getaix.github.io/symphra-modules/en/
+repo_url: https://github.com/getaix/symphra-modules.git
+repo_name: getaix/symphra-modules
+
+docs_dir: docs/en
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到暗色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到亮色模式
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+plugins:
+  - search:
+      lang:
+        - zh
+        - en
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_object_full_path: false
+            show_category_heading: true
+            show_if_no_docstring: false
+            heading_level: 2
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Quick Start: quickstart.md
+  - User Guide:
+      - Basic Concepts: guide/concepts.md
+      - Module Definition: guide/module-definition.md
+      - Loading Modules: guide/loading.md
+      - Lifecycle: guide/lifecycle.md
+      - Dependency Management: guide/dependencies.md
+      - Event System: guide/events.md
+      - Async Support: guide/async.md
+  - API Reference:
+      - Core Abstractions: api/abc.md
+      - Configuration: api/config.md
+      - Exceptions: api/exceptions.md
+      - Loader: api/loader.md
+      - Registry: api/registry.md
+      - Manager: api/manager.md
+      - Dependency Resolution: api/resolver.md
+      - Event System: api/events.md
+      - Utilities: api/utils.md
+  - Examples: examples.md
+  - Development: development.md
+  - Changelog: ../changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/getaix/symphra-modules.git
+  version:
+    provider: mike
+
+watch:
+  - src/symphra_modules

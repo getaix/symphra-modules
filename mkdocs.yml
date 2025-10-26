@@ -95,7 +95,7 @@ nav:
       - 工具: api/utils.md
   - 示例: examples.md
   - 开发指南: development.md
-  - 变更日志: changelog.md
+  - 变更日志: ../changelog.md
 
 extra:
   social:

@@ -9,20 +9,20 @@ docs_dir: docs/en
 
 theme:
   name: material
-  language: zh
+  language: en
   palette:
     - scheme: default
       primary: indigo
       accent: indigo
       toggle:
         icon: material/brightness-7
-        name: 切换到暗色模式
+        name: Switch to dark mode
     - scheme: slate
       primary: indigo
       accent: indigo
       toggle:
         icon: material/brightness-4
-        name: 切换到亮色模式
+        name: Switch to light mode
   features:
     - navigation.instant
     - navigation.tracking

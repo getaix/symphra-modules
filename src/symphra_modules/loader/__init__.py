@@ -1,7 +1,12 @@
-"""模块加载器."""
+"""模块加载器.
 
-from symphra_modules.loader.base import ModuleLoader
-from symphra_modules.loader.directory import DirectoryLoader
-from symphra_modules.loader.package import PackageLoader
+导出模块加载器基类和实现。
+"""
 
-__all__ = ["ModuleLoader", "DirectoryLoader", "PackageLoader"]
+from .base import ModuleLoader
+from .filesystem import FileSystemLoader
+
+__all__ = [
+    "ModuleLoader",
+    "FileSystemLoader",
+]

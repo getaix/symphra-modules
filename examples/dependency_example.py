@@ -67,12 +67,8 @@ def main() -> None:
     print("\n=== 循环依赖检测示例 ===")
     resolver_circular = DependencyResolver()
 
-    resolver_circular.add_module(
-        ModuleMetadata(name="module_x", dependencies=["module_y"])
-    )
-    resolver_circular.add_module(
-        ModuleMetadata(name="module_y", dependencies=["module_x"])
-    )
+    resolver_circular.add_module(ModuleMetadata(name="module_x", dependencies=["module_y"]))
+    resolver_circular.add_module(ModuleMetadata(name="module_y", dependencies=["module_x"]))
 
     try:
         resolver_circular.resolve()

@@ -1,7 +1,6 @@
 """注册表模块测试."""
 
 import pytest
-
 from symphra_modules.abc import BaseModule
 from symphra_modules.config import ModuleMetadata, ModuleState
 from symphra_modules.exceptions import ModuleNotFoundException, ModuleStateError

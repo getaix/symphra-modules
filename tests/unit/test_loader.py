@@ -1,13 +1,12 @@
 """模块加载器测试."""
 
-import sys
 from pathlib import Path
 
 import pytest
-
 from symphra_modules.abc import BaseModule, ModuleMetadata
 from symphra_modules.exceptions import ModuleLoadError
-from symphra_modules.loader import DirectoryLoader, PackageLoader
+
+from symphra_modules.loader import DirectoryLoader
 
 
 def test_directory_loader_init(tmp_path: Path) -> None:
@@ -156,37 +155,6 @@ def test_directory_loader_to_module_name_outside_base(tmp_path: Path) -> None:
     loader = DirectoryLoader(tmp_path)
     outside_path = Path("/some/other/path/module.py")
     assert loader._to_module_name(outside_path) is None
-
-
-def test_package_loader_load_success() -> None:
-    """测试从包加载模块."""
-    loader = PackageLoader()
-    # 使用标准库测试
-    modules = loader.load("json")
-    assert isinstance(modules, dict)
-
-
-def test_package_loader_load_not_found() -> None:
-    """测试加载不存在的包."""
-    loader = PackageLoader()
-    with pytest.raises(ModuleLoadError) as exc_info:
-        loader.load("nonexistent_package_xyz_123")
-    assert "包未找到" in str(exc_info.value)
-
-
-def test_package_loader_discover() -> None:
-    """测试发现包中的模块."""
-    loader = PackageLoader()
-    # 使用标准库测试
-    discovered = loader.discover("json")
-    assert isinstance(discovered, list)
-
-
-def test_package_loader_discover_not_found() -> None:
-    """测试发现不存在的包."""
-    loader = PackageLoader()
-    discovered = loader.discover("nonexistent_package_xyz_123")
-    assert discovered == []
 
 
 @pytest.mark.skip(reason="临时跳过,主要功能已被其他测试覆盖")

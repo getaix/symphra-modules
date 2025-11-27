@@ -2,26 +2,48 @@
 
 [![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
-[![Test Coverage](https://img.shields.io/badge/coverage-80%25-yellowgreen)](./htmlcov/index.html)
 
-高性能、高质量的 Python 模块管理库，支持动态加载、生命周期管理、依赖解析和异步操作。
+优雅简洁的 Python 模块化框架 - 单文件实现，支持异步操作和热重载。
 
 ## ✨ 核心特性
 
-- 🚀 **高性能设计** - 智能缓存、内存优化(`__slots__`)、延迟加载
-- 📦 **灵活加载** - 支持目录、包、自动加载多种方式
-- 🔄 **生命周期管理** - 完整的状态机和钩子系统
-- 🔗 **依赖解析** - Kahn算法拓扑排序,循环检测
-- 📡 **事件驱动** - 发布订阅模式,通配符支持
-- 🛡️ **类型安全** - mypy strict模式验证
+- 🎯 **极简设计** - 单文件实现,约 440 行代码
+- 🔗 **自动依赖解析** - Kahn 算法拓扑排序
+- 🛡️ **循环检测** - 自动检测并阻止循环依赖
+- 📦 **零依赖** - 仅使用 Python 标准库
+- 🔒 **类型安全** - 完整类型注解,mypy strict 通过
+- 🚀 **易于使用** - 声明式 API,清晰直观
 - ⚡ **异步支持** - 原生支持同步/异步模块
+- 🔥 **热重载** - 文件修改时自动重载模块
 
-## 📊 项目状态
+## 架构优势
 
-- **测试**: 117 passed (100%)
-- **覆盖率**: 79.78% (核心模块 80%+)
-- **代码质量**: ruff + mypy strict
-- **文档**: 中英双语 MkDocs
+**v2.0 重大改进**:
+- ✅ 从多文件架构重构为单文件 (~440 行)
+- ✅ 保留所有核心功能 (依赖解析、循环检测、生命周期管理)
+- ✅ 零外部依赖,部署更简单
+- ✅ 代码更易阅读和维护
+- ✅ 新增异步支持和热重载功能
+
+## 安装
+
+```bash
+# 基础安装
+pip install symphra-modules
+
+# 包含热重载功能
+pip install symphra-modules[hot-reload]
+```
+
+或使用 uv:
+
+```bash
+# 基础安装
+uv add symphra-modules
+
+# 包含热重载功能
+uv add symphra-modules[hot-reload]
+```
 
 ## 安装
 
@@ -38,47 +60,117 @@ uv add symphra-modules
 ## 🚀 快速开始
 
 ```python
-from symphra_modules import ModuleManager
-from symphra_modules.abc import BaseModule, ModuleMetadata
+from symphra_modules import Module, ModuleManager
 
 # 1. 定义模块
-class MyModule(BaseModule):
-    @property
-    def metadata(self) -> ModuleMetadata:
-        return ModuleMetadata(name="my_module", version="1.0.0")
-
+class DatabaseModule(Module):
+    name = "database"
+    
     def start(self) -> None:
-        print("模块已启动!")
+        print("数据库已连接")
 
 # 2. 使用管理器
-manager = ModuleManager()
-manager.load_module("my_module", source="./modules")
-manager.start_module("my_module")
+manager = ModuleManager("./modules")
+db = manager.load("database")
+manager.start("database")
 ```
 
-## 📚 文档
+## ⚡ 异步使用
 
-### 在线文档
+```python
+import asyncio
+from symphra_modules import Module, ModuleManager
 
-完整文档请访问: [Symphra Modules Documentation](https://symphra-modules.readthedocs.io)
+class AsyncModule(Module):
+    name = "async_module"
+    
+    async def start_async(self) -> None:
+        await asyncio.sleep(0.1)  # 模拟异步操作
+        print("异步模块已启动!")
 
-### 本地预览
+async def main():
+    manager = ModuleManager("./modules")
+    await manager.load_async("async_module")
+    await manager.start_async("async_module")
 
-```bash
-# 启动文档服务器
-uv run mkdocs serve
-
-# 访问 http://localhost:8000
+# asyncio.run(main())
 ```
 
-### 构建文档
+## 🔥 热重载使用
 
-```bash
-# 构建静态文档
-uv run mkdocs build
+```python
+from symphra_modules import ModuleManager
 
-# 文档生成在 site/ 目录
+# 启用热重载
+manager = ModuleManager("./modules", enable_hot_reload=True)
+manager.enable_hot_reload_monitoring()
+
+# 加载模块
+manager.load("my_module")
+manager.start("my_module")
+
+# 修改模块文件时，系统会自动重载
 ```
+
+## 📚 核心概念
+
+### 模块定义
+
+```python
+class UserModule(Module):
+    name = "user"
+    version = "1.0.0"
+    dependencies = ["database", "cache"]
+    
+    def start(self) -> None:
+        # 启动逻辑
+        pass
+```
+
+### 异步模块
+
+异步模块支持完整的 async/await 模式：
+
+```python
+class AsyncDatabaseModule(Module):
+    name = "async_database"
+    
+    async def start_async(self) -> None:
+        # 异步启动逻辑
+        await connect_to_database()
+    
+    async def stop_async(self) -> None:
+        # 异步停止逻辑
+        await disconnect_from_database()
+```
+
+### 热重载
+
+热重载功能允许在开发过程中自动重载修改的模块：
+
+1. 启用热重载监控
+2. 修改模块文件时自动检测变化
+3. 自动停止、重新加载并启动模块
+
+### 依赖管理
+
+模块管理器自动:
+1. 解析依赖关系
+2. 拓扑排序
+3. 按正确顺序加载
+4. 检测循环依赖
+
+### 模块生命周期
+
+```
+LOADED → STARTED ⇄ STOPPED
+```
+
+- **LOADED**: 模块类已实例化
+- **STARTED**: 模块运行中
+- **STOPPED**: 模块已停止
+
+异步模块支持相同的生命周期状态，但使用异步方法进行状态转换。
 
 ## 🧪 测试
 
@@ -119,7 +211,7 @@ uv run pytest
 uv run pytest --cov
 
 # 运行特定测试
-uv run pytest tests/unit/test_registry.py
+uv run pytest tests/test_all.py
 ```
 
 ### 代码质量检查

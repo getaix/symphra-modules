@@ -3,7 +3,6 @@
 import asyncio
 
 import pytest
-
 from symphra_modules.abc import BaseModule, ModuleInterface, call_module_method, is_async_module
 from symphra_modules.config import ModuleMetadata
 from symphra_modules.exceptions import ModuleConfigError

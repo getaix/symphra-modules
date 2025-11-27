@@ -1,15 +1,18 @@
 [project]
 name = "symphra-modules"
 version = "0.1.0"
-description = "高性能、高质量的 Python 模块管理库，支持动态加载、生命周期管理、依赖解析和异步操作"
+description = "高性能、高质量的 Python 模块管理库，支持动态加载、生命周期管理、依赖解析、异步操作和热重载"
 readme = "README.md"
 authors = [
     { name = "mpf", email = "rafit@qq.com" }
 ]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "watchdog>=6.0.0",
+    "psutil>=5.9.0",
+]
 license = { text = "MIT" }
-keywords = ["module", "plugin", "loader", "manager", "async"]
+keywords = ["module", "plugin", "loader", "manager", "async", "hot-reload"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -20,6 +23,9 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+
+[project.optional-dependencies]
+hot-reload = ["watchdog>=2.1.0"]
 
 [project.urls]
 Homepage = "https://github.com/getaix/symphra-modules"
@@ -44,12 +50,14 @@ dev-dependencies = [
     "mkdocs-material>=9.5.0",
     "mkdocstrings[python]>=0.24.0",
     "mkdocs-i18n>=0.4.0",
+    "watchdog>=2.1.0",
+    "types-psutil>=7.1.3.20251127",
 ]
 
 # Ruff 配置
 [tool.ruff]
 target-version = "py311"
-line-length = 120
+line-length = 100
 
 [tool.ruff.lint]
 select = [
@@ -144,4 +152,4 @@ exclude_lines = [
     "raise AttributeError",  # 排除属性错误
 ]
 precision = 2
-fail_under = 80  # 降低到合理的80%
+fail_under = 90  # 要求90%以上覆盖率

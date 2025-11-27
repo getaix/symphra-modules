@@ -1,7 +1,6 @@
 """依赖解析器测试."""
 
 import pytest
-
 from symphra_modules.config import ModuleMetadata
 from symphra_modules.exceptions import ModuleDependencyError
 from symphra_modules.resolver import DependencyGraph, DependencyResolver

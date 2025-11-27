@@ -3,10 +3,10 @@
 from pathlib import Path
 
 import pytest
-
 from symphra_modules.abc import BaseModule, ModuleMetadata
 from symphra_modules.config import ModuleState
 from symphra_modules.exceptions import ModuleNotFoundException
+
 from symphra_modules.manager import ModuleManager
 
 

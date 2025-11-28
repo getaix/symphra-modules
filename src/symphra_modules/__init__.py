@@ -31,12 +31,15 @@ __version__ = "2.0.0"
 from .core import (
     CircularDependencyError,
     DependencyError,
+    FileStateStore,
     LoaderError,
+    MemoryStateStore,
     Module,
     ModuleError,
     ModuleNotFoundError,
     ModuleState,
     ModuleStateError,
+    StateStore,
     call_module_method,
     is_async_module,
 )
@@ -70,6 +73,10 @@ __all__ = [
     # 工具函数
     "call_module_method",
     "is_async_module",
+    # 持久化
+    "StateStore",
+    "MemoryStateStore",
+    "FileStateStore",
     # 高级组件（可选使用）
     "DependencyGraph",
     "DependencyResolver",
